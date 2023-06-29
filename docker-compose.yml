@@ -1,0 +1,26 @@
+########################################################################
+# Este arquivo docker-compose faz uso das imagens originais, 
+# personalizadas por meio dos Dockerfile.
+#
+# Para inicializar os contêiners utilizando este aquivo, estando no 
+# diretório no qual este arquivo se localiza, basta executar:
+#
+# docker-compose up
+#
+########################################################################
+services:
+  postgres_db:
+    build: ./postgres_db
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database:/var/lib/postgresql/data
+
+  parking-control-api:
+    build: ./parking-control-api-main
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres_db
